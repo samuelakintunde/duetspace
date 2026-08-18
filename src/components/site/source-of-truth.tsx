@@ -10,7 +10,7 @@ const ROWS = [
   {
     question: "Who is responsible?",
     without: "Assumed but never documented",
-    answer: "Daniel — Research",
+    answer: "Daniel, Research",
     with: "Roles and responsibilities visible to everyone",
   },
   {
@@ -28,7 +28,7 @@ const ROWS = [
   {
     question: "What needs approval?",
     without: "Nobody knows who should sign off",
-    answer: "Module 3 — In review",
+    answer: "Module 3, in review",
     with: "Clear review and approval process",
   },
   {
@@ -41,20 +41,20 @@ const ROWS = [
 
 export function SourceOfTruth() {
   return (
-    <section className="bg-white px-6 py-20 md:px-12 lg:px-[120px] lg:py-[120px]">
+    <section className="bg-navy px-6 py-20 md:px-12 lg:px-[120px] lg:py-[120px]">
       <div className="mx-auto flex max-w-[800px] flex-col items-center gap-12 lg:gap-[72px]">
         <SectionHeader
           eyebrow="Source of Truth"
           title="See the whole collaboration in one place"
-          lede="At any point, everyone should be able to answer the same questions about the collaboration — who agreed to what, who contributed what, and what happens next."
+          lede="Everyone should be able to answer the same questions: who agreed to what, who contributed what, and what happens next."
         />
 
         <div className="w-full overflow-hidden rounded-[20px] border border-line shadow-table">
           <div className="flex gap-6 bg-brand p-5">
-            <p className="min-w-0 flex-1 text-[14px] font-bold text-white">
+            <p className="min-w-0 flex-1 text-[14px] font-bold text-navy">
               The question
             </p>
-            <p className="min-w-0 flex-1 text-[14px] font-bold text-white">
+            <p className="min-w-0 flex-1 text-[14px] font-bold text-navy">
               DuetSpace answers it
             </p>
           </div>
@@ -63,7 +63,7 @@ export function SourceOfTruth() {
             <div
               key={row.question}
               className={`flex flex-col gap-6 p-5 sm:flex-row ${
-                index % 2 === 0 ? "bg-white" : "bg-surface"
+                index % 2 === 0 ? "bg-panel" : "bg-navy"
               } ${index === ROWS.length - 1 ? "" : "border-b border-line"}`}
             >
               <div className="flex min-w-0 flex-1 flex-col gap-1">
@@ -71,9 +71,7 @@ export function SourceOfTruth() {
                 <p className="text-[12px] text-body">{row.without}</p>
               </div>
               <div className="flex min-w-0 flex-1 flex-col gap-1">
-                <p className="text-[14px] font-bold text-accent">
-                  {row.answer}
-                </p>
+                <p className="text-[14px] font-bold text-brand">{row.answer}</p>
                 <p className="text-[12px] text-body">{row.with}</p>
               </div>
             </div>

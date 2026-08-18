@@ -1,32 +1,59 @@
 @import "tailwindcss";
 
-/* Design tokens mapped from the Figma file (cocreate-landing-page-v2, node 9:4392).
-   The file binds no Figma variables, so the raw hexes are named here once. */
+/* Design tokens mapped from the DuetSpace brand style guide
+   (duetspace-brand-style-guide, node 147:4). The file binds no Figma
+   variables, so the raw hexes are named here once.
+
+   The token *names* are inherited from the earlier light build; their values
+   now point at the dark brand, so `text-ink` still means "primary type" and
+   `bg-surface` still means "panel" — they just resolve to the new palette. */
 @theme {
-  --color-ink: #0f172a;
-  --color-body: #475569;
-  --color-muted: #64748b;
-  --color-faint: #94a3b8;
-  --color-line: #e2e8f0;
-  --color-surface: #f8fafc;
-  --color-surface-strong: #f1f5f9;
-  --color-tint: #eef2f6;
-  --color-brand: #312e81;
-  --color-brand-soft: #e0e7ff;
-  --color-accent: #4f46e5;
-  --color-note: #737380;
-  --color-note-inverse: #d9d9e5;
+  /* Canvas & chromatic depths */
+  --color-navy: #0b132a; /* page background / core slate */
+  --color-panel: #1c2541; /* section canvas / cards / panels */
+  --color-surface: #1c2541;
+  --color-surface-strong: #1c2541;
 
-  --shadow-card: 0 10px 14px rgba(15, 23, 42, 0.04);
-  --shadow-panel: 0 16px 20px rgba(15, 23, 42, 0.07);
-  --shadow-table: 0 14px 34px rgba(15, 23, 42, 0.04);
-  --shadow-brand-sm: 0 10px 12px rgba(49, 46, 129, 0.15);
-  --shadow-brand-md: 0 12px 14px rgba(49, 46, 129, 0.15);
-  --shadow-brand-lg: 0 14px 15px rgba(49, 46, 129, 0.2);
-  --shadow-cta: 0 12px 14px rgba(0, 0, 0, 0.15);
+  /* Primary accents & brand heroes */
+  --color-brand: #00f5d4; /* bright teal — primary accent / focus */
+  --color-brand-vivid: #00f5d4;
+  --color-accent: #3b82f6; /* bright blue — interactive / core UI links */
+  --color-tint: rgba(0, 245, 212, 0.07); /* accent chip fill */
+  --color-brand-soft: #94a3b8;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", sans-serif;
+  /* Neutrals & metadata typography */
+  --color-ink: #f1f5f9; /* primary typography */
+  --color-body: #94a3b8; /* secondary typography / sub-labels */
+  --color-muted: #94a3b8;
+  /* The guide files #4B5563 under "borders / dividers / unselected". Used as
+     text it lands at 2.4:1 on navy, so placeholders and notes take the muted
+     slate instead and #4B5563 stays on borders only. */
+  --color-faint: #94a3b8; /* placeholders */
+  --color-note: #94a3b8;
+  --color-note-inverse: #94a3b8;
+  --color-graphite: #4b5563; /* borders / dividers */
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.14);
+
+  /* The guide has no success colour; the accent teal carries it. */
+  --color-success-tint: rgba(0, 245, 212, 0.07);
+
+  /* Depth on a dark canvas comes from the ground, not from grey shadows. */
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --shadow-panel: 0 16px 40px rgba(0, 0, 0, 0.3);
+  --shadow-table: 0 14px 34px rgba(0, 0, 0, 0.28);
+  --shadow-brand-sm: 0 8px 20px rgba(0, 245, 212, 0.18);
+  --shadow-brand-md: 0 10px 24px rgba(0, 245, 212, 0.22);
+  --shadow-brand-lg: 0 14px 32px rgba(0, 245, 212, 0.28);
+  --shadow-brand-vivid: 0 10px 24px rgba(0, 245, 212, 0.22);
+  --shadow-cta: 0 12px 30px rgba(0, 0, 0, 0.35);
+  --shadow-modal: 0 24px 48px rgba(0, 0, 0, 0.5);
+
+  --font-sans:
+    var(--font-schibsted), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-mono:
+    var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
 
 html {
@@ -34,7 +61,101 @@ html {
 }
 
 body {
-  background: #ffffff;
+  background: var(--color-navy);
   color: var(--color-ink);
   font-family: var(--font-sans);
+}
+
+/* The guide's ambient dot grid (hero-section > grid-bg, node 147:6):
+   an 80px lattice of 2px dots rather than 1,000 positioned rectangles. */
+.dot-grid {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 80px 80px;
+  background-position: 40px 40px;
+}
+
+/* Mono eyebrow / metadata caption, per the type ladder (CAPTION // Mono). */
+.eyebrow {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- Motion ---------------------------------------------------- */
+
+/* Sections rise into place as they enter the viewport. The hidden state is
+   scoped to `[data-visible="false"]`, which only ever renders once the
+   IntersectionObserver in <Reveal> has mounted, and the <noscript> rule below
+   guarantees the content is visible if JS never runs. */
+.reveal {
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal[data-visible="false"] {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* The beta dialog fades and lifts instead of snapping in. `allow-discrete`
+   keeps the closing frame alive long enough to animate out. */
+dialog {
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    overlay 0.2s ease allow-discrete,
+    display 0.2s ease allow-discrete;
+}
+
+dialog[open] {
+  opacity: 1;
+  transform: none;
+}
+
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+dialog::backdrop {
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    overlay 0.2s ease allow-discrete,
+    display 0.2s ease allow-discrete;
+}
+
+dialog[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  dialog[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* Motion is decoration here — never make someone sit through it. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

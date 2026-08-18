@@ -44,11 +44,11 @@ export function WhoItsFor() {
   return (
     <section
       id="who-its-for"
-      className="scroll-mt-12 bg-surface px-6 py-20 md:px-12 lg:px-[120px] lg:py-[120px]"
+      className="scroll-mt-12 bg-panel px-6 py-20 md:px-12 lg:px-[120px] lg:py-[120px]"
     >
       <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-12 lg:gap-[72px]">
         <div className="flex w-full flex-col items-center gap-5 text-center">
-          <p className="text-[13px] font-bold tracking-[0.015em] text-accent uppercase">
+          <p className="eyebrow text-[12px] font-semibold text-brand">
             Who is DuetSpace for?
           </p>
           <h2 className="max-w-[960px] text-[32px] leading-[1.2] font-extrabold text-ink lg:text-[44px]">
@@ -57,11 +57,11 @@ export function WhoItsFor() {
           </h2>
         </div>
 
-        <div className="grid w-full grid-cols-1 items-start gap-6 lg:grid-cols-2">
+        <div className="grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
           {AUDIENCES.map((audience) => (
             <div
               key={audience.title}
-              className="flex flex-col items-start gap-6 rounded-[16px] border border-line bg-white p-8 shadow-card"
+              className="flex flex-col items-start gap-6 rounded-[16px] border border-line bg-navy p-8 shadow-card transition-colors duration-200 hover:border-line-strong"
             >
               {audience.flatIcon ? (
                 <Icon name={audience.icon} size={40} />
@@ -80,7 +80,7 @@ export function WhoItsFor() {
                 </p>
               </div>
 
-              <div className="flex w-full flex-wrap items-start gap-2">
+              <div className="mt-auto flex w-full flex-wrap items-start gap-2">
                 {audience.tags.map((tag) => (
                   <span
                     key={tag}

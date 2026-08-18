@@ -8,7 +8,7 @@ const COLLABORATIONS = [
     outcome: "Research → Publication",
   },
   {
-    route: "UK ↔ Nigeria",
+    route: "USA ↔ UK",
     pairing: "Creator ↔ Creator",
     outcome: "Course → Digital product",
   },
@@ -16,33 +16,33 @@ const COLLABORATIONS = [
 
 export function CrossBorder() {
   return (
-    <section className="bg-white px-6 py-20 md:px-12 lg:px-[120px] lg:py-[100px]">
+    <section className="bg-navy px-6 py-20 md:px-12 lg:px-[120px] lg:py-[100px]">
       <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-12 lg:gap-16">
         <SectionHeader
           eyebrow="Global collaboration"
           title="Collaborate without the border"
-          lede="Your collaborator doesn't need to be in the same city, country or institution. DuetSpace is designed for collaborations that span locations, disciplines and organisations."
+          lede="Your collaborator doesn't need to be in the same city, country or institution."
           ledeWidth={820}
         />
 
-        <div className="grid w-full grid-cols-1 items-start gap-6 lg:grid-cols-2">
+        <div className="grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
           {COLLABORATIONS.map((collab) => (
             <div
               key={collab.route}
-              className="flex flex-col items-start gap-6 rounded-[16px] border border-line bg-white p-8 shadow-card"
+              className="flex flex-col items-start gap-6 rounded-[16px] border border-line bg-panel p-8 shadow-card transition-colors duration-200 hover:border-line-strong"
             >
               <div className="flex w-full items-center justify-between gap-4">
-                <div className="flex items-center gap-2.5 rounded-full border border-line bg-surface px-3.5 py-2">
+                <div className="flex items-center gap-2.5 rounded-full border border-line bg-navy px-3.5 py-2">
                   <Icon name="cb-globe" size={16} />
                   <p className="text-[14px] font-bold whitespace-nowrap text-ink">
                     {collab.route}
                   </p>
                 </div>
                 <div className="flex items-center">
-                  <span className="-mr-2 flex size-7 items-center justify-center rounded-full border border-line bg-surface">
+                  <span className="-mr-2 flex size-7 items-center justify-center rounded-full border border-line bg-navy">
                     <Icon name="cb-map-pin" size={16} />
                   </span>
-                  <span className="flex size-7 items-center justify-center rounded-full border border-line bg-surface">
+                  <span className="flex size-7 items-center justify-center rounded-full border border-line bg-navy">
                     <Icon name="cb-map-pin" size={16} />
                   </span>
                 </div>
@@ -67,7 +67,7 @@ export function CrossBorder() {
                   <span className="flex size-6 shrink-0 items-center justify-center rounded-[6px] bg-tint">
                     <Icon name="cb-arrow-right" size={14} />
                   </span>
-                  <p className="text-[15px] font-semibold text-accent">
+                  <p className="text-[15px] font-semibold text-brand">
                     {collab.outcome}
                   </p>
                 </div>

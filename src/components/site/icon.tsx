@@ -2,7 +2,8 @@
 
 /**
  * Renders an icon exported from Figma (public/figma/*.svg) at its designed
- * leaf dimensions. Colours are baked into the exported SVGs, so nothing here
+ * leaf dimensions. Colours are baked into the SVGs — the exports were
+ * recoloured in place for the dark brand (style guide 147:4), so nothing here
  * recolours them. Non-square assets pass `width`/`height` explicitly.
  */
 type IconProps = {

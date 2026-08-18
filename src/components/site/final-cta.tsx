@@ -1,39 +1,30 @@
+import { BetaSignupButton } from "./beta-signup";
+
 export function FinalCta() {
   return (
     <section
       id="join-the-beta"
-      className="scroll-mt-12 bg-brand px-6 py-20 md:px-12 lg:px-[120px] lg:py-[120px]"
+      className="scroll-mt-12 bg-panel px-6 py-20 md:px-12 lg:px-[120px] lg:py-[120px]"
     >
       <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-12">
         <div className="flex w-full flex-col items-center gap-5 text-center">
-          <h2 className="max-w-[800px] text-[32px] leading-[normal] font-extrabold text-white lg:text-[44px]">
+          <h2 className="max-w-[800px] text-[32px] leading-[normal] font-extrabold text-ink lg:text-[44px]">
             Help us build DuetSpace
           </h2>
-          <p className="max-w-[600px] text-[16px] text-brand-soft lg:text-[18px]">
-            We&apos;re building DuetSpace with our first community of creators,
-            experts, researchers and teams. Join the beta, try the product and
-            tell us what collaboration looks like for you.
-          </p>
-          <p className="text-[13px] text-note-inverse">
-            DuetSpace is currently in early development. We&apos;re inviting a
-            small group of early users to help shape the product.
+          <p className="max-w-[600px] text-[16px] text-body lg:text-[18px]">
+            Join the beta, try the product and tell us what collaboration looks
+            like for you.
           </p>
         </div>
 
         <div className="flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-start">
-          {/* TODO: point at the real signup form / contact destination. */}
-          <a
-            href="#"
-            className="flex h-[56px] items-center justify-center rounded-[12px] bg-white px-9 text-[16px] font-bold whitespace-nowrap text-brand shadow-cta"
-          >
+          <BetaSignupButton className="flex h-[56px] items-center justify-center rounded-[12px] bg-brand px-9 text-[16px] font-bold whitespace-nowrap text-navy shadow-brand-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-brand-lg active:translate-y-0">
             Join the Beta
-          </a>
-          <a
-            href="#"
-            className="flex h-[56px] items-center justify-center rounded-[12px] border border-white/25 bg-white/12 px-9 text-[16px] font-bold whitespace-nowrap text-white"
-          >
+          </BetaSignupButton>
+          {/* Same form — its free-text field is the collaboration story. */}
+          <BetaSignupButton className="flex h-[56px] items-center justify-center rounded-[12px] border border-line-strong bg-white/5 px-9 text-[16px] font-bold whitespace-nowrap text-ink transition-colors duration-200 hover:bg-white/10">
             Share your collaboration story
-          </a>
+          </BetaSignupButton>
         </div>
       </div>
     </section>

@@ -22,9 +22,7 @@ export function SectionHeader({
       id={id}
       className={`flex w-full scroll-mt-12 flex-col items-center gap-5 text-center ${className}`}
     >
-      <p className="text-[13px] font-bold tracking-[0.015em] text-accent uppercase">
-        {eyebrow}
-      </p>
+      <p className="eyebrow text-[12px] font-semibold text-brand">{eyebrow}</p>
       <h2 className="text-[32px] leading-[normal] font-extrabold text-ink lg:text-[44px]">
         {title}
       </h2>
