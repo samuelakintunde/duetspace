@@ -1,26 +1,40 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Design tokens mapped from the Figma file (cocreate-landing-page-v2, node 9:4392).
+   The file binds no Figma variables, so the raw hexes are named here once. */
+@theme {
+  --color-ink: #0f172a;
+  --color-body: #475569;
+  --color-muted: #64748b;
+  --color-faint: #94a3b8;
+  --color-line: #e2e8f0;
+  --color-surface: #f8fafc;
+  --color-surface-strong: #f1f5f9;
+  --color-tint: #eef2f6;
+  --color-brand: #312e81;
+  --color-brand-soft: #e0e7ff;
+  --color-accent: #4f46e5;
+  --color-note: #737380;
+  --color-note-inverse: #d9d9e5;
+
+  --shadow-card: 0 10px 14px rgba(15, 23, 42, 0.04);
+  --shadow-panel: 0 16px 20px rgba(15, 23, 42, 0.07);
+  --shadow-table: 0 14px 34px rgba(15, 23, 42, 0.04);
+  --shadow-brand-sm: 0 10px 12px rgba(49, 46, 129, 0.15);
+  --shadow-brand-md: 0 12px 14px rgba(49, 46, 129, 0.15);
+  --shadow-brand-lg: 0 14px 15px rgba(49, 46, 129, 0.2);
+  --shadow-cta: 0 12px 14px rgba(0, 0, 0, 0.15);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
 }

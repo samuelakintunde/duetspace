@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon-container">
+<rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="#EEF2F6"/>
+<rect x="0.5" y="0.5" width="39" height="39" rx="19.5" stroke="#E2E8F0"/>
+<path id="card-icon" d="M20 11V14H21.1111V16V18C21.1111 18.5304 20.877 19.0391 20.4602 19.4142C20.0435 19.7893 19.4783 20 18.8889 20H16.6667C16.0773 20 15.5121 19.7893 15.0953 19.4142C14.6786 19.0391 14.4444 18.5304 14.4444 18V14H15.5556V11C15.5556 10.7348 15.6726 10.4804 15.881 10.2929C16.0894 10.1054 16.372 10 16.6667 10H18.8889C19.1836 10 19.4662 10.1054 19.6746 10.2929C19.8829 10.4804 20 10.7348 20 11Z" fill="#312E81"/>
+</g>
+</svg>
