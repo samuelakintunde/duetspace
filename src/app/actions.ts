@@ -4,11 +4,9 @@ import { cookies } from "next/headers";
 import { after } from "next/server";
 import { sql } from "@/lib/db";
 import { notifyBetaSignup } from "@/lib/notify";
+import { SIGNUP_COOKIE } from "@/lib/signup";
 
 export type ActionResult = { ok: true } | { ok: false; error: string };
-
-/** Ties a story submission back to the signup that produced it. */
-const SIGNUP_COOKIE = "ds_signup";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -104,6 +102,35 @@ export async function submitCollaborationStory(
     return { ok: true };
   } catch (error) {
     console.error("story submission failed", error);
+    return {
+      ok: false,
+      error: "We couldn't save that. Please try again in a moment.",
+    };
+  }
+}
+
+/**
+ * Records whether the visitor agreed to be contacted for a research call, on
+ * the email they already gave. Consent is per-signup and can be withdrawn by
+ * answering again, so it stores the answer rather than only the yes.
+ */
+export async function setResearchConsent(
+  consent: boolean,
+): Promise<ActionResult> {
+  const cookieValue = (await cookies()).get(SIGNUP_COOKIE)?.value;
+  if (!cookieValue || !/^\d+$/.test(cookieValue)) {
+    return { ok: false, error: "We couldn't tell which signup this is." };
+  }
+
+  try {
+    await sql()`
+      update beta_signups
+      set research_consent = ${consent}, research_consent_at = now()
+      where id = ${cookieValue}
+    `;
+    return { ok: true };
+  } catch (error) {
+    console.error("research consent update failed", error);
     return {
       ok: false,
       error: "We couldn't save that. Please try again in a moment.",

@@ -21,6 +21,7 @@ type Signup = {
   collaboration: string | null;
   challenge: string | null;
   collaborated_before: boolean | null;
+  research_consent: boolean | null;
   created_at: string;
 };
 
@@ -64,7 +65,8 @@ export default async function AdminSignupsPage() {
   }
 
   const signups = (await sql()`
-    select id, email, role, collaboration, challenge, collaborated_before, created_at
+    select id, email, role, collaboration, challenge, collaborated_before,
+           research_consent, created_at
     from beta_signups order by id desc limit 500
   `) as Signup[];
 
@@ -83,7 +85,9 @@ export default async function AdminSignupsPage() {
           <h1 className="text-[28px] font-extrabold text-ink">Beta signups</h1>
           <p className="text-[14px] text-body">
             {signups.length} signup{signups.length === 1 ? "" : "s"} ·{" "}
-            {stories.length} stor{stories.length === 1 ? "y" : "ies"}
+            {stories.length} stor{stories.length === 1 ? "y" : "ies"} ·{" "}
+            {signups.filter((row) => row.research_consent).length} happy to be
+            contacted
           </p>
         </div>
         <form action={signOut}>
@@ -112,6 +116,7 @@ export default async function AdminSignupsPage() {
                   <th className={HEAD}>Describes as</th>
                   <th className={HEAD}>Would build</th>
                   <th className={HEAD}>Done before</th>
+                  <th className={HEAD}>Can contact</th>
                   <th className={HEAD}>Biggest challenge</th>
                 </tr>
               </thead>
@@ -140,6 +145,17 @@ export default async function AdminSignupsPage() {
                         : row.collaborated_before
                           ? "Yes"
                           : "No"}
+                    </td>
+                    <td className={CELL}>
+                      {row.research_consent === null ? (
+                        "not asked"
+                      ) : row.research_consent ? (
+                        <span className="font-semibold text-brand">
+                          Yes — happy to talk
+                        </span>
+                      ) : (
+                        "declined"
+                      )}
                     </td>
                     <td className={`${CELL} min-w-[280px]`}>
                       {row.challenge ?? "—"}

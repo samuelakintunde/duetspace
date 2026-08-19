@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Icon } from "@/components/site/icon";
 import { NavBar } from "@/components/site/nav-bar";
 import { ResearchCallout, StoryCard } from "@/components/site/post-signup";
+import { currentSignup } from "@/lib/signup";
 
 export const metadata: Metadata = {
   title: "You're in | DuetSpace Beta",
@@ -11,7 +12,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function BetaSuccessPage() {
+/** Reads the signup cookie, so it must render per request. */
+export const dynamic = "force-dynamic";
+
+export default async function BetaSuccessPage() {
+  const signup = await currentSignup();
+
   return (
     <>
       <NavBar />
@@ -30,7 +36,10 @@ export default function BetaSuccessPage() {
         </div>
 
         <StoryCard />
-        <ResearchCallout />
+        <ResearchCallout
+          email={signup?.email ?? null}
+          initialConsent={signup?.researchConsent ?? null}
+        />
       </main>
     </>
   );

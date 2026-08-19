@@ -26,3 +26,9 @@ create table if not exists collaboration_stories (
 );
 
 create index if not exists collaboration_stories_signup_idx on collaboration_stories (signup_id);
+
+-- Consent to be contacted for a research conversation, captured on
+-- /beta/success against the signup that the visitor's cookie identifies.
+-- Null means never asked; false means explicitly declined.
+alter table beta_signups add column if not exists research_consent    boolean;
+alter table beta_signups add column if not exists research_consent_at timestamptz;
