@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { submitBetaSignup } from "@/app/actions";
 import { Icon } from "./icon";
 
 const DIALOG_ID = "beta-signup-dialog";
@@ -56,6 +57,8 @@ export function BetaSignupButton({
 export function BetaSignupDialog() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // The page behind a native dialog still scrolls; lock it while open.
   useEffect(() => {
@@ -89,6 +92,10 @@ export function BetaSignupDialog() {
       id={DIALOG_ID}
       ref={dialogRef}
       aria-labelledby="beta-signup-title"
+      onClose={() => {
+        setPending(false);
+        setError(null);
+      }}
       // Native dialogs ignore outside clicks; the backdrop is the dialog itself.
       onClick={(event) => {
         if (event.target === dialogRef.current) close();
@@ -120,9 +127,18 @@ export function BetaSignupDialog() {
 
         <form
           className="flex flex-col gap-6"
-          onSubmit={(event) => {
+          onSubmit={async (event) => {
             event.preventDefault();
-            // TODO: post to the real beta-signup destination before navigating.
+            const form = event.currentTarget;
+            setPending(true);
+            setError(null);
+            const result = await submitBetaSignup(new FormData(form));
+            setPending(false);
+            if (!result.ok) {
+              setError(result.error);
+              return;
+            }
+            form.reset();
             close();
             router.push("/beta/success");
           }}
@@ -214,12 +230,18 @@ export function BetaSignupDialog() {
             </fieldset>
           </div>
 
-          <div className="pt-2">
+          <div className="flex flex-col gap-3 pt-2">
+            {error && (
+              <p role="alert" className="text-[13px] text-ink">
+                {error}
+              </p>
+            )}
             <button
               type="submit"
-              className="flex w-full items-center justify-center rounded-[10px] bg-brand px-7 py-3.5 text-[15px] font-semibold text-navy shadow-brand-vivid transition-all duration-200 hover:-translate-y-0.5 hover:shadow-brand-lg active:translate-y-0"
+              disabled={pending}
+              className="flex w-full items-center justify-center rounded-[10px] bg-brand px-7 py-3.5 text-[15px] font-semibold text-navy shadow-brand-vivid transition-all duration-200 hover:-translate-y-0.5 hover:shadow-brand-lg active:translate-y-0 disabled:pointer-events-none disabled:opacity-60"
             >
-              Join the Beta
+              {pending ? "Joining…" : "Join the Beta"}
             </button>
           </div>
         </form>

@@ -21,10 +21,10 @@ const PROBLEMS = [
 
 const STEPS = [
   {
-    phase: "Discover",
+    phase: "Invite",
     number: "01",
-    title: "Find the right collaboration",
-    body: "Connect with people whose skills and expertise complement yours.",
+    title: "Invite your collaborator",
+    body: "You already know who you're building with. Send them an invite to start a shared Venture.",
   },
   {
     phase: "Agree",
@@ -83,7 +83,7 @@ export function FrictionWorkflow() {
         <SectionHeader
           eyebrow="The Journey"
           title="From idea to launch, together"
-          lede="A clear path from finding the right partner to managing the venture as it grows."
+          lede="A clear path from the first invite to managing the venture as it grows."
           id="how-it-works"
         />
 

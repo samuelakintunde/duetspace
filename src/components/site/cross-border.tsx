@@ -3,14 +3,14 @@ import { SectionHeader } from "./section-header";
 
 const COLLABORATIONS = [
   {
-    route: "Nigeria ↔ USA",
-    pairing: "Professor ↔ Professor",
-    outcome: "Research → Publication",
-  },
-  {
     route: "USA ↔ UK",
     pairing: "Creator ↔ Creator",
     outcome: "Course → Digital product",
+  },
+  {
+    route: "Nigeria ↔ USA",
+    pairing: "Professor ↔ Professor",
+    outcome: "Research → Publication",
   },
 ];
 

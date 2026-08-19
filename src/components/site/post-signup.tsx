@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { submitCollaborationStory } from "@/app/actions";
 
 /** The frame links this to example.com — a Figma placeholder, not a destination.
  *  TODO: swap in the real scheduling link before this page goes public. */
@@ -40,6 +41,8 @@ const LONG_FIELDS = [
 
 export function StoryCard() {
   const [shared, setShared] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <div className="flex w-full max-w-[640px] flex-col gap-6 rounded-[20px] border border-line bg-panel p-6 sm:p-10">
@@ -59,9 +62,18 @@ export function StoryCard() {
       {!shared && (
         <form
           className="flex flex-col gap-6"
-          onSubmit={(event) => {
+          onSubmit={async (event) => {
             event.preventDefault();
-            // TODO: post to the real research-response destination.
+            setPending(true);
+            setError(null);
+            const result = await submitCollaborationStory(
+              new FormData(event.currentTarget),
+            );
+            setPending(false);
+            if (!result.ok) {
+              setError(result.error);
+              return;
+            }
             setShared(true);
           }}
         >
@@ -97,6 +109,12 @@ export function StoryCard() {
             ))}
           </div>
 
+          {error && (
+            <p role="alert" className="text-[13px] text-ink">
+              {error}
+            </p>
+          )}
+
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
             <Link
               href="/"
@@ -106,9 +124,10 @@ export function StoryCard() {
             </Link>
             <button
               type="submit"
-              className="flex items-center justify-center rounded-[10px] bg-brand px-7 py-3.5 text-[15px] font-semibold whitespace-nowrap text-navy shadow-brand-vivid transition-all duration-200 hover:-translate-y-0.5 hover:shadow-brand-lg active:translate-y-0"
+              disabled={pending}
+              className="flex items-center justify-center rounded-[10px] bg-brand px-7 py-3.5 text-[15px] font-semibold whitespace-nowrap text-navy shadow-brand-vivid transition-all duration-200 hover:-translate-y-0.5 hover:shadow-brand-lg active:translate-y-0 disabled:pointer-events-none disabled:opacity-60"
             >
-              Share my story
+              {pending ? "Sharing…" : "Share my story"}
             </button>
           </div>
         </form>
