@@ -1,7 +1,9 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { after } from "next/server";
 import { sql } from "@/lib/db";
+import { notifyBetaSignup } from "@/lib/notify";
 
 export type ActionResult = { ok: true } | { ok: false; error: string };
 
@@ -41,6 +43,20 @@ export async function submitBetaSignup(
       )
       returning id
     `) as { id: string }[];
+
+    // Sent after the response so a slow mail provider never delays the form,
+    // and a failing one never fails the signup.
+    after(() =>
+      notifyBetaSignup({
+        id: String(rows[0].id),
+        email,
+        role: text(formData.get("role"), 120),
+        collaboration: text(formData.get("collaboration"), 120),
+        challenge: text(formData.get("challenge"), 4000),
+        collaboratedBefore:
+          before === "Yes" ? true : before === "No" ? false : null,
+      }),
+    );
 
     const store = await cookies();
     store.set(SIGNUP_COOKIE, String(rows[0].id), {
