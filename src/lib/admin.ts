@@ -4,7 +4,10 @@ import { cookies } from "next/headers";
 const COOKIE = "ds_admin";
 
 function secret(): string | null {
-  const password = process.env.ADMIN_PASSWORD;
+  // Trimmed because the value is set through CLIs and dashboards that can
+  // append a trailing newline, which would otherwise make the real password
+  // impossible to type.
+  const password = process.env.ADMIN_PASSWORD?.trim();
   return password && password.length > 0 ? password : null;
 }
 
@@ -30,7 +33,7 @@ export function isConfigured(): boolean {
 export function passwordMatches(candidate: string): boolean {
   const password = secret();
   if (!password) return false;
-  return sameDigest(token(password), token(candidate));
+  return sameDigest(token(password), token(candidate.trim()));
 }
 
 export async function isSignedIn(): Promise<boolean> {
